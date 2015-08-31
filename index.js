@@ -1,6 +1,7 @@
 //manifest loader for replacing rev'd sources
 var loaderUtils = require('loader-utils');
 var path = require('path');
+var mime = require('mime');
 var gutil = require('gulp-util');
 
 module.exports = function(content) {
@@ -15,8 +16,21 @@ module.exports = function(content) {
     var prefix = options.prefix || '';
     var result = manifest[fileName] ? path.join(prefix, manifest[fileName]) : '';
 
-    gutil.log('manifest loader:', gutil.colors.gray(fileName), '>', gutil.colors.green(result));
-    callback(null, 'module.exports = "' + result + '"');
+    var limit = 0;
+    if(options.limit) {
+        limit = parseInt(options.limit, 10);
+    }
+
+    var mimetype = options.mimetype || options.minetype || mime.lookup(this.resourcePath);
+
+    if(limit <= 0 || content.length < limit) {
+        gutil.log('manifest loader:', gutil.colors.gray(fileName), '>', gutil.colors.green('to base64'));
+        callback(null, "module.exports = " + JSON.stringify("data:" + (mimetype ? mimetype + ";" : "") + "base64," + content.toString("base64")));
+    } else {
+        gutil.log('manifest loader:', gutil.colors.gray(fileName), '>', gutil.colors.green(result));
+        callback(null, 'module.exports = "' + result + '"');
+    }
+
 
 };
 

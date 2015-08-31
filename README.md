@@ -2,7 +2,7 @@
 
 given params like this:
 
-`var manifestParams = '?relativeSplit=images/&prefix=dist/images&manifest=rev-manifest&outputDir=' + path.join(__dirname, 'public', 'dist');`
+`var manifestParams = '?limit=10000&hash=sha512&digest=hex&relativeSplit=images/&prefix=dist/images&manifest=rev-manifest&outputDir=' + path.join(__dirname, 'public', 'dist');`
 
 and a manifest like this
 
