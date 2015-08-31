@@ -13,9 +13,9 @@ and a manifest like this
 
 and a require like this
 
-`var about = require('../images/about-us.jpg');
+`var about = require('../images/about-us.jpg');`
 
 you get
 
-`var about = require('../public/dist/images/about-us-9af871125c.jpg');
+`var about = require('../public/dist/images/about-us-9af871125c.jpg');`
 
